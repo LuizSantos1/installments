@@ -1,0 +1,39 @@
+<?php
+$atributoDescontovista = Mage::getStoreConfig('installments/settings/atributo_desconto_vista');
+$descontoVista = Mage::getStoreConfig('installments/settings/desconto_vista');
+/** @var Mage_Catalog_Model_Product $_product */
+$_product = Mage::registry('current_product');
+/** @var Contardi_Installments_Helper_Data $_helper */
+$_helper = Mage::helper('installments');
+
+$numParcelas = Mage::getStoreConfig('installments/settings/numparcelas');
+
+if ($_product) {
+    if ($atributoDescontovista)
+        $descontoVista = $_helper->getPercentualDescontoVista($_product, 'decimal');
+    if (Mage::getStoreConfig('installments/installment_by_product/enabled') && Mage::getStoreConfig('installments/installment_by_product/max_installment') > 0){
+        $numParcelas = Mage::getStoreConfig('installments/installment_by_product/max_installment');
+    }
+}
+
+
+?>
+<script type="text/javascript">
+    var installmentsOptions = {
+        enabled: '<?php echo Mage::getStoreConfig('installments/settings/enabled'); ?>',
+        juros: '<?php echo Mage::getStoreConfig('installments/settings/juros'); ?>',
+        descontoVista: '<?php echo $descontoVista;?>',
+        numparcelas: '<?php echo $numParcelas;?>',
+        numParcelasSemJuros: '<?php echo Mage::getStoreConfig('installments/settings/numparcelas_sem_juros');?>',
+        showNumParcelasSemJuros: '<?php echo Mage::getStoreConfig('installments/settings/show_numparcelas_sem_juros');?>',
+        parcelaMinima: '<?php echo Mage::getStoreConfig('installments/settings/parcela_minima');?>',
+        integradores: '<?php echo Mage::getStoreConfig('installments/settings/integradores');?>',
+        gateways: '<?php echo Mage::getStoreConfig('installments/settings/gateways');?>',
+        tipoJuros: '<?php echo Mage::getStoreConfig('installments/settings/tipo_juros');?>',
+        descontoPrimeiraParcela: '<?php echo Mage::getStoreConfig('installments/settings/desconto_primeira_parcela');?>',
+        textDescontoVista: '<?php echo Mage::getStoreConfig('installments/settings/texto_desconto_vista');?>',
+        textSemJuros: '<?php echo $this->__('sem juros');?>',
+        template: <?php echo Mage::helper('core')->jsonEncode(Mage::app()->getLocale()->getJsPriceFormat());?>
+    };
+    var installments = new jQuery.installments(installmentsOptions);
+</script>

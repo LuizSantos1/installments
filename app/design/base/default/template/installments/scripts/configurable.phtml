@@ -1,0 +1,38 @@
+<script type="text/javascript">
+    $j(document).ready(function(){
+        if(typeof spConfig != 'undefined'){
+            spConfig.reloadPrice = function(){
+                if (this.config.disablePriceReload) {
+                    return;
+                }
+                var price    = 0;
+                var oldPrice = 0;
+                for(var i=this.settings.length-1;i>=0;i--){
+                    var selected = this.settings[i].options[this.settings[i].selectedIndex];
+                    if(selected.config){
+                        price    += parseFloat(selected.config.price);
+                        oldPrice += parseFloat(selected.config.oldPrice);
+                    }
+                }
+
+                optionsPrice.changePrice('config', {'price': price, 'oldPrice': oldPrice});
+                optionsPrice.reload();
+
+                if(typeof installments != 'undefined'){
+                    var productId = optionsPrice.productId;
+                    var finalPrice = optionsPrice.productPrice + price;
+                    installments.updateInstallments(finalPrice);
+                    installments.updatePrecoVista(finalPrice,productId);
+                    installments.updatePrecoParcelado(finalPrice,productId);
+                    installments.updatePrecoRegular(finalPrice,productId);
+                    installments.updatePrecoDe(finalPrice,productId);
+                    installments.updatePrecoPor(finalPrice,productId);
+                }
+
+                return price;
+
+            }
+        }
+        
+    });
+</script>

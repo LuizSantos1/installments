@@ -1,0 +1,65 @@
+<script>
+    $j(document).ready(function(){
+
+        if(typeof installments != 'undefined'){
+
+            var once = 1;
+
+            groupedProduct = {
+
+                sumProductsPrices: function(){
+                    var price = 0;
+                    $j('.grouped-items-dl input.qty, .grouped input.qty').each(function(i, el){
+
+                        if($j(el).attr('price')){
+
+                            if($j(el).attr('special_price') && $j(el).attr('special_price') > 0){
+                                specialPriceProduct = $j(el).attr('special_price');
+                            }else{
+                                specialPriceProduct = $j(el).attr('price');
+                            }
+
+                            var qty = parseInt($j(el).val());
+                            if(qty > 0){
+                                price += specialPriceProduct * qty;
+                            }
+                        }
+
+                    });
+
+                    return price;
+
+                },
+
+                reloadPrice: function(){
+                    var productId = $j('input[type="hidden"][name="product"]').val();
+                    var calculatedPrice = this.sumProductsPrices();
+                    if(calculatedPrice == 0){
+                        $j('div.price-box span#product-minimal-price-'+productId).parent().css('display','none');
+                        if(once == 1){
+                            $j('div.price-box span#product-minimal-price-'+productId).parent().addClass('regular-price').prepend('<span class="label">Por:</span>');
+                            once++;
+                        }
+                    }else{
+                        $j('div.price-box span#product-minimal-price-'+productId).parent().css('display','block');
+                        $j('div.price-box span#product-minimal-price-'+productId).html(formatCurrency(calculatedPrice, installments.options.template));
+                    }
+
+                    installments.updateInstallments(calculatedPrice);
+                    installments.updatePrecoVista(calculatedPrice,productId);
+                    installments.updatePrecoParcelado(calculatedPrice,productId);
+                }
+
+            };
+
+            $j('.grouped-items-dl input.qty, .grouped input.qty').change(function(){
+                groupedProduct.reloadPrice();
+            });
+
+            groupedProduct.reloadPrice();
+        }
+
+
+    });
+
+</script>

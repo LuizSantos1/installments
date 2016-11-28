@@ -1,0 +1,71 @@
+<?php
+/**
+ * @var Contardi_Installments_Block_Prices $this
+ * @var Contardi_Installments_Helper_Data $_helper
+ * @var Mage_Catalog_Model_Product $_product
+ * @var Mage_Tax_Helper_Data $_taxHelper
+ * @var Mage_Core_Helper_Data $_coreHelper
+ * @var Mage_Weee_Helper_Data $_weeeHelper
+ */
+$_helper = Mage::helper('installments');
+$_taxHelper = Mage::helper('tax');
+$_coreHelper = Mage::helper('core');
+$_weeeHelper = Mage::helper('weee');
+$_product = $this->getProduct();
+
+if($_product->getData() && $_product->getCanShowPrice()):
+
+    $_finalPrice = $_taxHelper->getPrice($_product, $_product->getFinalPrice());
+
+    if( $_product->getTypeId() == 'bundle' && !$_finalPrice){
+        /** @var Mage_Catalog_Model_Product_Type_Price $_priceModel */
+        $_priceModel  = $_product->getPriceModel();
+        list($_minimalPriceInclTax, $_maximalPriceInclTax) = $_priceModel->getTotalPrices($_product, null, true, false);
+        $_finalPrice = $_minimalPriceInclTax;
+    }
+
+    $_helper->product = $_product;
+    $installments = $_helper->getInstallments($_finalPrice);
+    $installmentss = $_helper->getPossibleInstallments($_finalPrice);?>
+    <?php if($installmentss):?>
+        <div class="installments" id="installments-product-<?php echo $_product->getId();?>">
+            <ul>
+                <?php $i=1; foreach($installmentss as $p):?>
+                    <?php
+                    $parcela = $_coreHelper->currency( $p['valorParcelas'], true, false);
+                    $valorTotal = $p['valorParcelas'] * $i;
+                    $valorTotal = $_coreHelper->currency( $valorTotal, true, false);
+                    ?>
+                    <li class="parcela-<?php echo $i; if($i==1 && $p['desconto']) echo ' p-desconto'; echo ($p['juros']) ? ' p-juros' : ' p-semjuros'; ?>">
+
+                        <div class="parcela">
+                            <span class="num"><?php echo $i.'x';?></span> <span class="sep">de</span> <span class="valor"><?php echo $parcela;?></span>
+                        </div>
+
+                        <?php if($i==1 && $p['desconto']): ?>
+                            <div class="desconto">
+                                <span class="label"><?php echo $this->__('Desconto de');?></span> <span class="value"><?php echo $p['desconto'] ?>%</span>
+                            </div>
+                        <?php elseif($i > 1 && $p['juros']): ?>
+                            <div class="valor-total">
+                                <span class="label"><?php echo $this->__('Total');?></span> <span class="value"><?php echo $valorTotal;?></span>
+                            </div>
+                        <?php endif;?>
+
+                        <?php if( $p['juros'] ):?>
+                            <div class="juros">
+                                <span class="value"><?php echo $p['juros'];?></span> <span class="am"><?php echo $this->__('a.m.');?></span>
+                            </div>
+                        <?php else:?>
+                            <div class="s-juros">
+                                <span class="label"><?php echo $this->__('sem juros');?></span>
+                            </div>
+                        <?php endif; ?>
+
+                    </li>
+                <?php $i++; endforeach;?>
+            </ul>
+        </div>
+
+    <?php endif;?>
+<?php endif;?>

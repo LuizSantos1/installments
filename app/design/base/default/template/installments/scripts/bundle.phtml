@@ -1,0 +1,95 @@
+<script>
+    $j(document).ready(function(){
+        if(typeof bundle != 'undefined'){
+            bundle.reloadPrice = function(){
+                var calculatedPrice = 0;
+                var dispositionPrice = 0;
+                var includeTaxPrice = 0;
+
+                for (var option in this.config.selected) {
+                    if (this.config.options[option]) {
+                        for (var i=0; i < this.config.selected[option].length; i++) {
+                            var prices = this.selectionPrice(option, this.config.selected[option][i]);
+                            var qty = 1;
+                            if (typeof this.config.selected[option][i].qty != "undefined") {
+                                qty = this.config.selected[option][i].qty;
+                            }
+                            calculatedPrice += Number(prices[0] * qty);
+                            dispositionPrice += Number(prices[1] * qty);
+                            includeTaxPrice += Number(prices[2] * qty);
+                        }
+                    }
+                }
+
+                //Tax is calculated in a different way for the the TOTAL BASED method
+                //We round the taxes at the end. Hence we do the same for consistency
+                //This variable is set in the bundle.phtml
+                if (taxCalcMethod == CACL_TOTAL_BASE) {
+                    var calculatedPriceFormatted = calculatedPrice.toFixed(10);
+                    var includeTaxPriceFormatted = includeTaxPrice.toFixed(10);
+                    var tax = includeTaxPriceFormatted - calculatedPriceFormatted;
+                    calculatedPrice = includeTaxPrice - Math.round(tax * 100) / 100;
+                }
+
+                //make sure that the prices are all rounded to two digits
+                //this is needed when tax calculation is based on total for dynamic
+                //price bundle product. For fixed price bundle product, the rounding
+                //needs to be done after option price is added to base price
+                if (this.config.priceType == '0') {
+                    calculatedPrice = Math.round(calculatedPrice*100)/100;
+                    dispositionPrice = Math.round(dispositionPrice*100)/100;
+                    includeTaxPrice = Math.round(includeTaxPrice*100)/100;
+
+                }
+
+                var event = $(document).fire('bundle:reload-price', {
+                    price: calculatedPrice,
+                    priceInclTax: includeTaxPrice,
+                    dispositionPrice: dispositionPrice,
+                    bundle: this
+                });
+                if (!event.noReloadPrice) {
+                    optionsPrice.specialTaxPrice = 'true';
+                    optionsPrice.changePrice('bundle', calculatedPrice);
+                    optionsPrice.changePrice('nontaxable', dispositionPrice);
+                    optionsPrice.changePrice('priceInclTax', includeTaxPrice);
+                    optionsPrice.reload();
+                }
+
+                if(typeof installments != 'undefined' && calculatedPrice > 0){
+                    var productId = optionsPrice.productId;
+                    installments.updateInstallments(calculatedPrice);
+                    installments.updatePrecoVista(calculatedPrice,productId);
+                    installments.updatePrecoParcelado(calculatedPrice,productId);
+                    installments.updatePrecoBundle(calculatedPrice,productId);
+                }
+
+                return calculatedPrice;
+
+            };
+
+            bundle.changeOptionQty = function (element, event) {
+                var checkQty = true;
+                if (typeof(event) != 'undefined') {
+                    if (event.keyCode == 8 || event.keyCode == 46) {
+                        checkQty = false;
+                    }
+                }
+                if (checkQty && (Number(element.value) == 0 || isNaN(Number(element.value)))) {
+                    element.value = 1;
+                }
+                parts = element.id.split('-');
+                optionId = parts[2];
+                if (!this.config['options'][optionId].isMulti) {
+                    selectionId = this.config.selected[optionId][0];
+                    this.config.options[optionId].selections[selectionId].qty = element.value*1;
+                }
+                bundle.reloadPrice();
+            };
+
+        }
+
+
+    });
+
+</script>

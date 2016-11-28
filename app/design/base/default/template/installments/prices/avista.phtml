@@ -1,0 +1,69 @@
+<?php
+/**
+ * @var Contardi_Installments_Block_Prices $this
+ * @var Contardi_Installments_Helper_Data $_helper
+ * @var Mage_Catalog_Model_Product $_product
+ * @var Mage_Tax_Helper_Data $_taxHelper
+ * @var Mage_Core_Helper_Data $_coreHelper
+ */
+$_helper = Mage::helper('installments');
+$_taxHelper = Mage::helper('tax');
+$_coreHelper = Mage::helper('core');
+$_product = $this->getProduct();
+if($_product && $_product->getCanShowPrice()):
+    $_finalPrice = $_taxHelper->getPrice($_product, $_product->getFinalPrice());
+
+    if( $_product->getTypeId() == 'bundle' && !$_finalPrice){
+        /** @var Mage_Catalog_Model_Product_Type_Price $_priceModel */
+        $_priceModel  = $_product->getPriceModel();
+        list($_minimalPriceInclTax, $_maximalPriceInclTax) = $_priceModel->getTotalPrices($_product, null, true, false);
+        $_finalPrice = $_minimalPriceInclTax;
+    } else if($_product->getTypeId() == 'grouped'){
+        $_store = $_product->getStore();
+        $_minimalPriceValue = $_product->getMinimalPrice();
+        $_convertedFinalPrice = $_store->roundPrice($_store->convertPrice($_finalPrice));
+        if ($_minimalPriceValue) {
+            $_finalPrice = $_minimalPriceValue;
+        } else {
+            $price = 0;
+            if($_productInstance = $_product->getTypeInstance()) {
+                $_associatedProducts = $_productInstance->getAssociatedProducts();
+                $price = $_minimalPriceValue;
+                if (!empty($_associatedProducts)) {
+                    foreach ($_associatedProducts as $_associatedProduct) {
+                        if ($_associatedProduct->isSaleable()) {
+                            $associatedQty = ($_associatedProduct->getQty() == '0') ? 1 : $_associatedProduct->getQty();
+                            $price += ($_associatedProduct->getFinalPrice() * $associatedQty);
+                        }
+                    }
+                }
+            }
+            $_exclTax = $_taxHelper->getPrice($_product, $price, $includingTax = null);
+            $_inclTax = $_taxHelper->getPrice($_product, $price, $includingTax = true);
+
+            $_showPrice = $_inclTax;
+            if (!$_taxHelper->displayPriceIncludingTax()) {
+                $_showPrice = $_exclTax;
+            }
+            $_finalPrice = $_showPrice;
+        }
+    }
+    ?>
+    <?php
+    $textoVista =  Mage::getStoreConfig('installments/settings/texto_desconto_vista');
+    $textoVista = ($textoVista) ? $textoVista : $this->__('à vista no boleto');
+    ?>
+
+    <?php if($_finalPrice):?>
+        <div class="price-box-avista" id="price-box-avista-<?php echo $_product->getId();?>">
+            <?php
+            $_precoAVista = $_helper->getPrecoVista($_finalPrice, true, $_product);
+            $_discount = $_helper->getPercentualDescontoVista($_product);
+            ?>
+            <?php if($_precoAVista): ?>
+                <span class="label"><span><?php echo $this->__($textoVista, $_discount); ?></span></span>
+                <span class="price"><span><?php echo $_precoAVista ?></span></span>
+            <?php endif;?>
+        </div>
+    <?php endif;?>
+<?php endif;?>

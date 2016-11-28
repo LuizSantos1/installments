@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+        <installments>
+            <label>Installments</label>
+            <tab>catalog</tab>
+            <sort_order>130</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings>
+                    <label>Configurações</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment>Estas configurações serão usadas para mostrar os  installmentss disponíveis ao mostrar cada produto.</comment>
+                    <fields>
+                        <enabled>
+                            <label>Habilitar exibição de installments</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Serão mostrados os installmentss no frontend.</comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+
+                        <desconto_vista>
+                            <label>Percentual padrão de desconto no preço à vista</label>
+                            <comment>Percentual de desconto padrão (caso o atributo não esteja definido) para mostrar como preço à vista (ex: 10%).</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <default>0</default>
+                        </desconto_vista>
+
+                        <texto_desconto_vista>
+                            <label>Texto para desconto no preço à vista</label>
+                            <comment>Utilize "%s" para trazer o percentual de desconto à vista. Ex.: com %s de desconto à vista</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>21</sort_order>
+                            <validate>required-entry</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <default>0</default>
+                        </texto_desconto_vista>
+
+                        <atributo_desconto_vista>
+                            <label>Atributo do Produto com percentual de desconto no preço à vista</label>
+                            <comment>Percentual de desconto definido no produto para calcular o preço à vista.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Contardi_Installments_Model_Source_Attributes</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <default>0</default>
+                        </atributo_desconto_vista>
+
+                        <desconto_primeira_parcela>
+                            <label>Percentual padrão de desconto na primeira parcela</label>
+                            <comment><![CDATA[Aplica um desconto padrão (caso o atributo não esteja definido) na primeira parcela.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <default>0</default>
+                        </desconto_primeira_parcela>
+
+                        <juros>
+                            <label>Juros aplicado ao installments</label>
+                            <comment>Em porcentagem (ex: 1,99%). Juros compostos e ao mês.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <default>0</default>
+                        </juros>
+
+                        <parcela_minima>
+                            <label>Valor da Parcela mínima</label>
+                            <comment>Valor da parcela mínima. Ex: 45.50</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <default>0</default>
+                        </parcela_minima>
+
+                        <numparcelas>
+                            <label>Número de parcelas</label>
+                            <comment>Número de parcelas para mostrar abaixo do preço de cada produto.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Contardi_Installments_Model_Source_Parcelas</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </numparcelas>
+                        
+                        <numparcelas_sem_juros>
+                            <label>Número de parcelas sem juros</label>
+                            <comment>Número de parcelas sem juros para mostrar no installments dentro de cada produto.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Contardi_Installments_Model_Source_Parcelas</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </numparcelas_sem_juros>
+
+                        <show_numparcelas_sem_juros>
+                            <label>Exibir número de parcelas sem juros na listagem</label>
+                            <comment>Exibe o Número de parcelas sem juros junto com as parcelas com juros no catálogo.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>71</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_numparcelas_sem_juros>
+                        
+                        <tipo_juros>
+                            <label>Tipo de Cálculo de Juros</label>
+                            <comment>Tipo de Cálculo de Juros que será aplicado para gerar o installments.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Contardi_Installments_Model_Source_Juros</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tipo_juros>
+                    </fields>
+                </settings>
+            </groups>
+        </installments>
+    </sections>
+</config>

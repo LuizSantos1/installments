@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Contardi_Installments>
+			<version>1.1.0</version>
+		</Contardi_Installments>
+	</modules>
+	<global>
+        <blocks>
+            <installments>
+                <class>Contardi_Installments_Block</class>
+            </installments>
+        </blocks>
+		<models>
+			<installments>
+				<class>Contardi_Installments_Model</class>
+			</installments>
+		</models>
+		<helpers>
+			<installments>
+				<class>Contardi_Installments_Helper</class>
+			</installments>
+		</helpers>
+	</global>
+    <frontend>
+        <layout>
+            <updates>
+                <installments>
+                    <file>contardi/installments.xml</file>
+                </installments>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Contardi_Installments>
+                    <files>
+                        <default>Contardi_Installments.csv</default>
+                    </files>
+                </Contardi_Installments>
+            </modules>
+        </translate>
+    </frontend>
+    <default>
+        <installments>
+            <parcelas>
+                <texto_desconto_vista>à vista no boleto</texto_desconto_vista>
+            </parcelas>
+            <installment_by_product>
+                <enabled>0</enabled>
+                <choose_product>1</choose_product>
+            </installment_by_product>
+        </installments>
+    </default>
+</config>

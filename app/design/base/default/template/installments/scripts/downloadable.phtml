@@ -1,0 +1,35 @@
+<script>
+    $j(document).ready(function(){
+        if(typeof dConfig != 'undefined'){
+            dConfig.reloadPrice = function(){
+                var price = 0;
+                config = this.config;
+                $$('.product-downloadable-link').each(function(elm){
+                    if (config[elm.value] && elm.checked) {
+                        price += parseFloat(config[elm.value]);
+                    }
+                });
+                try {
+                    var _displayZeroPrice = optionsPrice.displayZeroPrice;
+                    optionsPrice.displayZeroPrice = false;
+                    optionsPrice.changePrice('downloadable', price);
+                    optionsPrice.reload();
+                    optionsPrice.displayZeroPrice = _displayZeroPrice;
+
+                    if(typeof installments != 'undefined'){
+                        var productId = optionsPrice.productId;
+                        var calculatedPrice = parseFloat(optionsPrice.productPrice) + price;
+                        installments.updateInstallments(calculatedPrice);
+                        installments.updatePrecoVista(calculatedPrice,productId);
+                        installments.updatePrecoParcelado(calculatedPrice,productId);
+                    }
+                } catch (e) {
+
+                }
+
+            }
+        }
+
+    });
+
+</script>

@@ -1,0 +1,52 @@
+<?php
+$_product = Mage::registry('current_product');
+?>
+<?php if ($_product) :?>
+<script type="text/javascript">
+
+    $j(document).ready(function(){
+
+        var productId = '<?php echo $_product->getId();?>';
+        var finalPrice = '<?php echo $_product->getFinalPrice();?>';
+        if(typeof installments != 'undefined' && $j('ul.tier-prices li').length > 0){
+            var tierPrices = [];
+            $j('ul.tier-prices li').each(function(){
+                var qty = parseFloat($j(this).find('.qts').html());
+                var price = installments.convertRealToFloat(($j(this).find('.price').html()));
+                var benefit = parseFloat(($j(this).find('.benefit .percent').html()));
+                var tierPrice = {
+                    'qty': qty,
+                    'price': price,
+                    'benefit': benefit
+                };
+                tierPrices.push(tierPrice);
+            });
+
+            $j('#qty').watch({
+                    properties: "prop_value",
+
+                    // callback function when a change is detected
+                    callback: function(data, i) {
+                        var qty = parseFloat( data.vals[i] );
+                        var tierPrice = 0;
+                        $j(tierPrices).each(function(i, tier){
+                            if(qty >= tier.qty){
+                                tierPrice = tier.price;
+                            }
+                        });
+                        var newPrice = ( tierPrice > 0 ) ? tierPrice : finalPrice;
+
+                        installments.updatePrecoRegular(newPrice,productId);
+                        installments.updatePrecoVista(newPrice, productId);
+                        installments.updatePrecoParcelado(newPrice, productId);
+                        installments.updateInstallments(newPrice);
+                    }
+                }
+            );
+
+        }
+
+
+    });
+</script>
+<?php endif;?>

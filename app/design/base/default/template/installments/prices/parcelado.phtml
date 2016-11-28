@@ -1,0 +1,92 @@
+<?php
+/**
+ * @var Contardi_Installments_Block_Prices $this
+ * @var Contardi_Installments_Helper_Data $_helper
+ * @var Mage_Catalog_Model_Product $_product
+ * @var Mage_Tax_Helper_Data $_taxHelper
+ * @var Mage_Core_Helper_Data $_coreHelper
+ */
+$_helper = Mage::helper('installments');
+$_taxHelper = Mage::helper('tax');
+$_coreHelper = Mage::helper('core');
+$_product = $this->getProduct();
+
+if($_product && $_product->getCanShowPrice()):
+    $_finalPrice = $_taxHelper->getPrice($_product, $_product->getFinalPrice());
+
+    if( $_product->getTypeId() == 'bundle' && !$_finalPrice){
+        if (! Mage::registry('product')) {
+            $_product = Mage::getModel('catalog/product')->load($_product->getId());
+        }
+        /** @var Mage_Catalog_Model_Product_Type_Price $_priceModel */
+        $_priceModel  = $_product->getPriceModel();
+        list($_minimalPriceInclTax, $_maximalPriceInclTax) = $_priceModel->getTotalPrices($_product, null, true, false);
+        $_finalPrice = $_minimalPriceInclTax;
+    } else if($_product->getTypeId() == 'grouped'){
+        $_store = $_product->getStore();
+        $_minimalPriceValue = $_product->getMinimalPrice();
+        $_convertedFinalPrice = $_store->roundPrice($_store->convertPrice($_finalPrice));
+        if ($_minimalPriceValue) {
+            $_finalPrice = $_minimalPriceValue;
+        } else {
+            $price = 0;
+            if($_productInstance = $_product->getTypeInstance()) {
+                $_associatedProducts = $_productInstance->getAssociatedProducts();
+                $price = $_minimalPriceValue;
+                if (!empty($_associatedProducts)) {
+                    foreach ($_associatedProducts as $_associatedProduct) {
+                        if ($_associatedProduct->isSaleable()) {
+                            $associatedQty = ($_associatedProduct->getQty() == '0') ? 1 : $_associatedProduct->getQty();
+                            $price += ($_associatedProduct->getFinalPrice() * $associatedQty);
+                        }
+                    }
+                }
+            }
+            $_exclTax = $_taxHelper->getPrice($_product, $price, $includingTax = null);
+            $_inclTax = $_taxHelper->getPrice($_product, $price, $includingTax = true);
+
+            $_showPrice = $_inclTax;
+            if (!$_taxHelper->displayPriceIncludingTax()) {
+                $_showPrice = $_exclTax;
+            }
+            $_finalPrice = $_showPrice;
+        }
+    }
+
+    $_helper->product = $_product;
+    $installments = $_helper->getInstallments($_finalPrice);
+    ?>
+
+    <div class="price-box-parcelado" id="price-box-parcelado-<?php echo $_product->getId();?>">
+        <?php if(!empty($installments)): ?>
+
+            <?php if($installments['numParcelasSemJuros'] && $installments['juros'] && Mage::getStoreConfig("installments/settings/show_numparcelas_sem_juros")):?>
+                <div class="preco-parcelado-sem-juros">
+                    <span class="upto"><span><?php echo $this->__('em até');?></span></span>
+                    <span class="num"><span><?php echo $installments['numParcelasSemJuros'];?>x</span></span>
+                    <span class="de"><span>de</span></span>
+                    <span class="value"><span><?php echo $_coreHelper->currency($installments['valorParcelasSemJuros'], true, false);?></span></span>
+                    <span class="s-juros"><span><?php echo $this->__('sem juros');?></span></span>
+                </div>
+            <?php endif;?>
+
+            <div class="preco-parcelado">
+                <span class="or"><span><?php echo $this->__('ou');?></span></span>
+                <span class="num"><span><?php echo $installments['numParcelas'];?>x</span></span>
+                <span class="de"><span>de</span></span>
+                <span class="value"><span><?php echo $_coreHelper->currency($installments['valorParcelas'], true, false);?></span></span>
+
+                <?php if(!empty($installments['juros']) > 0):?>
+                    <span class="juros">
+                        <span class="value">
+                            <span><?php echo $this->__($installments['juros']);?></span>
+                            <span class="am"><span><?php echo $this->__('a.m.');?></span></span>
+                        </span>
+                    </span>
+                <?php else:?>
+                    <span class="s-juros"><span><?php echo $this->__('sem juros');?></span></span>
+                <?php endif;?>
+            </div>
+        <?php endif;?>
+    </div>
+<?php endif;?>
