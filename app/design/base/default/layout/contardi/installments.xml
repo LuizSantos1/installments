@@ -6,73 +6,73 @@
             <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
             <action method="addJs"><script>installments/installments.js</script></action>
             <action method="addJs"><script>installments/installments.js</script></action>
-            <block type="core/template"  name="installments.script" as="installments_script" template="installments/script.phtml" />
+            <block type="core/template"  name="installments.script" as="installments_script" template="contardi/installments/script.phtml" />
         </reference>
     </default>
 
     <catalog_product_view>
         <reference name="product.info">
-            <block type="installments/prices" name="parcelas.produto" as="installments" template="installments/parcelas.phtml" />
-            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="installments/prices/avista.phtml" />
-            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="installments/prices/parcelado.phtml" />
+            <block type="installments/prices" name="parcelas.produto" as="installments" template="contardi/installments/parcelas.phtml" />
+            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="contardi/installments/prices/avista.phtml" />
+            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="contardi/installments/prices/parcelado.phtml" />
             <block type="core/text_list" name="product.additional.scripts" as="additional_scripts">
-                <block type="core/template" name="reload.tier.price.product" as="reloadTierPriceProduct" template="installments/scripts/tier-prices.phtml" />
-                <block type="core/template" name="reload.price.product.options" as="reloadPriceProductOptions" template="installments/scripts/options.phtml" />
+                <block type="core/template" name="reload.tier.price.product" as="reloadTierPriceProduct" template="contardi/installments/scripts/tier-prices.phtml" />
+                <block type="core/template" name="reload.price.product.options" as="reloadPriceProductOptions" template="contardi/installments/scripts/options.phtml" />
             </block>
         </reference>
     </catalog_product_view>
 
     <catalog_category_default>
         <reference name="product_list">
-            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="installments/prices/avista.phtml" />
-            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="installments/prices/parcelado.phtml" />
+            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="contardi/installments/prices/avista.phtml" />
+            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="contardi/installments/prices/parcelado.phtml" />
         </reference>
     </catalog_category_default>
 
     <catalog_category_layered>
         <reference name="product_list">
-            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="installments/prices/avista.phtml" />
-            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="installments/prices/parcelado.phtml" />
+            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="contardi/installments/prices/avista.phtml" />
+            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="contardi/installments/prices/parcelado.phtml" />
         </reference>
     </catalog_category_layered>
 
     <catalogsearch_result_index>
         <reference name="search_result_list">
-            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="installments/prices/avista.phtml" />
-            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="installments/prices/parcelado.phtml" />
+            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="contardi/installments/prices/avista.phtml" />
+            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="contardi/installments/prices/parcelado.phtml" />
         </reference>
     </catalogsearch_result_index>
 
     <checkout_cart_index>
         <reference name="checkout.cart.crosssell">
-            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="installments/prices/avista.phtml" />
-            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="installments/prices/parcelado.phtml" />
+            <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="contardi/installments/prices/avista.phtml" />
+            <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="contardi/installments/prices/parcelado.phtml" />
         </reference>
     </checkout_cart_index>
 
     <PRODUCT_TYPE_simple translate="label" module="catalog">
         <reference name="product.additional.scripts">
-            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="installments/scripts/simple.phtml" />
+            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="contardi/installments/scripts/simple.phtml" />
         </reference>
     </PRODUCT_TYPE_simple>
     <PRODUCT_TYPE_configurable translate="label" module="catalog">
         <reference name="product.additional.scripts">
-            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="installments/scripts/configurable.phtml" />
+            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="contardi/installments/scripts/configurable.phtml" />
         </reference>
     </PRODUCT_TYPE_configurable>
     <PRODUCT_TYPE_downloadable translate="label" module="downloadable">
         <reference name="product.additional.scripts">
-            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="installments/scripts/downloadable.phtml" />
+            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="contardi/installments/scripts/downloadable.phtml" />
         </reference>
     </PRODUCT_TYPE_downloadable>
     <PRODUCT_TYPE_grouped translate="label" module="catalog">
         <reference name="product.additional.scripts">
-            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="installments/scripts/grouped.phtml" />
+            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="contardi/installments/scripts/grouped.phtml" />
         </reference>
     </PRODUCT_TYPE_grouped>
     <PRODUCT_TYPE_bundle>
         <reference name="product.additional.scripts">
-            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="installments/scripts/bundle.phtml" />
+            <block type="core/template" name="reload.price.product" as="reloadPriceProduct" template="contardi/installments/scripts/bundle.phtml" />
         </reference>
     </PRODUCT_TYPE_bundle>
 </layout>

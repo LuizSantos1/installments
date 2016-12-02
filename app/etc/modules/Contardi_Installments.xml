@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Contardi_Installments>
+            <active>true</active>
+			<codePool>community</codePool>
+        </Contardi_Installments>
+    </modules>
+</config>
