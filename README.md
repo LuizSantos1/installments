@@ -1,9 +1,10 @@
 # Parcelamento.
-Payment method module KOIN (v1.1.1) - Magento 1.7.x - 1.9.x
-
 
 Módulo de parcelamento para exibição no catálogo, esse módulo não influencia o funcionamento do checkout, é usado apenas para exibição de parcelas e de preço com desconto, a aplicação do desconto ou juros dependerá da forma de pagamento configurada.
 
+Esse módulo utiliza a biblioteca jquery1.12.0 que já vem no magento 1.9.3.x
+Caso você utilize outra versão, será preciso comentar ou alterar a chamada do jQuery dentro deo arquivo de layout
+[https://github.com/contardi/installments/blob/master/app/design/base/default/layout/contardi/installments.xml#L5]
  
 ## Instalação
 
@@ -30,9 +31,5 @@ Módulo de parcelamento para exibição no catálogo, esse módulo não influenc
     ***Preço parcelado:** `<?php echo $this->getChildHtml('preco_parcelado'); ?>`*  
     ***Preço à vista:** `<?php echo $this->getChildHtml('preco_avista'); ?>`*
 
-- Na view do produto existe mais duas opções.  
-**a)** Para atualizar os preços ao mudar de opção do produto configurável ou opção customizada, deve-se chamar na view do produto
-    Para exibir todas as parcelas do preço parcelado:  
+- Na view do produto existe também outra opção de exibir todas as parcelas
     `<?php echo $this->getChildHtml('installments'); ?>`  
-**b)** Scrips que atualização as opções customizadas e configuráveis:  
-    `<?php echo $this->getChildHtml('additional_scripts'); ?>`

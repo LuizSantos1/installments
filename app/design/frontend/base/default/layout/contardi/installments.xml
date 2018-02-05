@@ -2,7 +2,7 @@
 <layout version="0.1.0">
     <default>
         <reference name="head">
-            <action method="addJs"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+            <action method="addJs"><script>lib/jquery/jquery-1.12.0.min.js</script></action>
             <action method="addJs"><script>lib/jquery/noconflict.js</script></action>
             <action method="addJs"><script>installments/installments.js</script></action>
             <action method="addJs"><script>installments/installments.js</script></action>
@@ -15,6 +15,9 @@
             <block type="installments/prices" name="parcelas.produto" as="installments" template="contardi/installments/parcelas.phtml" />
             <block type="installments/prices" name="preco.a.vista.produto" as="preco_avista" template="contardi/installments/prices/avista.phtml" />
             <block type="installments/prices" name="preco.parcelado.produto" as="preco_parcelado" template="contardi/installments/prices/parcelado.phtml" />
+
+        </reference>
+        <reference name="product.info.additional">
             <block type="core/text_list" name="product.additional.scripts" as="additional_scripts">
                 <block type="core/template" name="reload.tier.price.product" as="reloadTierPriceProduct" template="contardi/installments/scripts/tier-prices.phtml" />
                 <block type="core/template" name="reload.price.product.options" as="reloadPriceProductOptions" template="contardi/installments/scripts/options.phtml" />

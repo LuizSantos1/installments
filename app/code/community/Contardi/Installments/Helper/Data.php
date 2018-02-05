@@ -1,9 +1,19 @@
 <?php
+/**
+ *
+ * INFORMAÇÕES SOBRE LICENÇA
+ * Open Software License (OSL 3.0).
+ * http://opensource.org/licenses/osl-3.0.php
+ * DISCLAIMER
+ *
+ * @category      Contardi
+ * @package       Contardi_Installments
+ * @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author        Thiago Contardu <thiago@contardi.com.br>
+ */
 
 class Contardi_Installments_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    const CONFIG_PARCELAMENTO_INSTALLMENT_BY_PRODUCT = 'installments/installment_by_product/';
-
     public $enabled = false;
     public $juros = false;
     public $descontoVista = false;
@@ -36,7 +46,7 @@ class Contardi_Installments_Helper_Data extends Mage_Core_Helper_Abstract
         if (
             is_null($price)
             || (!$this->isEnabled())
-            || !( in_array($type, array('numparcelas', 'gateways', 'integradores')) && is_string($type) )
+            || !(in_array($type, array('numparcelas', 'gateways', 'integradores')) && is_string($type))
         ) {
             return false;
         }

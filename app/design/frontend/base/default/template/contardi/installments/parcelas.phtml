@@ -13,7 +13,7 @@ $_coreHelper = Mage::helper('core');
 $_weeeHelper = Mage::helper('weee');
 $_product = $this->getProduct();
 
-if($_product->getData() && $_product->getCanShowPrice()):
+if($_product->getData() && $_product->isSalable()):
 
     $_finalPrice = $_taxHelper->getPrice($_product, $_product->getFinalPrice());
 

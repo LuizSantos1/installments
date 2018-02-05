@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ INFORMAÇÕES SOBRE LICENÇA
+  ~
+  ~ Open Software License (OSL 3.0).
+  ~ http://opensource.org/licenses/osl-3.0.php
+  ~
+  ~ DISCLAIMER
+  ~
+  ~ Não edite este arquivo caso você pretenda atualizar este módulo futuramente
+  ~ para novas versões.
+  ~
+  ~ @category      Contardi
+  ~ @package       Contardi_Installments
+  ~ @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  ~ @author        Thiago Contardi
+  -->
+
 <config>
-	<modules>
-		<Contardi_Installments>
-			<version>1.1.0</version>
-		</Contardi_Installments>
-	</modules>
-	<global>
+    <modules>
+        <Contardi_Installments>
+            <version>1.2.1</version>
+        </Contardi_Installments>
+    </modules>
+    <global>
         <blocks>
             <installments>
                 <class>Contardi_Installments_Block</class>
             </installments>
         </blocks>
-		<models>
-			<installments>
-				<class>Contardi_Installments_Model</class>
-			</installments>
-		</models>
-		<helpers>
-			<installments>
-				<class>Contardi_Installments_Helper</class>
-			</installments>
-		</helpers>
-	</global>
+        <models>
+            <installments>
+                <class>Contardi_Installments_Model</class>
+            </installments>
+        </models>
+        <helpers>
+            <installments>
+                <class>Contardi_Installments_Helper</class>
+            </installments>
+        </helpers>
+    </global>
     <frontend>
         <layout>
             <updates>
@@ -42,13 +59,9 @@
     </frontend>
     <default>
         <installments>
-            <parcelas>
+            <settings>
                 <texto_desconto_vista>à vista no boleto</texto_desconto_vista>
-            </parcelas>
-            <installment_by_product>
-                <enabled>0</enabled>
-                <choose_product>1</choose_product>
-            </installment_by_product>
+            </settings>
         </installments>
     </default>
 </config>

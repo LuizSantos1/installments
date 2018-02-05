@@ -10,7 +10,7 @@ $_helper = Mage::helper('installments');
 $_taxHelper = Mage::helper('tax');
 $_coreHelper = Mage::helper('core');
 $_product = $this->getProduct();
-if($_product && $_product->getCanShowPrice()):
+if($_product && $_product->isSalable()):
     $_finalPrice = $_taxHelper->getPrice($_product, $_product->getFinalPrice());
 
     if( $_product->getTypeId() == 'bundle' && !$_finalPrice){

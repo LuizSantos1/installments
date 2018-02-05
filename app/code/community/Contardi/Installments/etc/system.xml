@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ INFORMAÇÕES SOBRE LICENÇA
+  ~
+  ~ Open Software License (OSL 3.0).
+  ~ http://opensource.org/licenses/osl-3.0.php
+  ~
+  ~ DISCLAIMER
+  ~
+  ~ Não edite este arquivo caso você pretenda atualizar este módulo futuramente
+  ~ para novas versões.
+  ~
+  ~ @category      Contardi
+  ~ @package       Contardi_Installments
+  ~ @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  ~ @author        Thiago Contardi
+  -->
+
 <config>
     <sections>
         <installments>
             <label>Installments</label>
             <tab>catalog</tab>
-            <sort_order>130</sort_order>
+            <sort_order>150</sort_order>
             <show_in_default>1</show_in_default>
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
@@ -16,13 +33,13 @@
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                    <comment>Estas configurações serão usadas para mostrar os  installmentss disponíveis ao mostrar cada produto.</comment>
+                    <comment>Estas configurações serão usadas para mostrar os parcelamentos disponíveis ao mostrar cada produto.</comment>
                     <fields>
                         <enabled>
-                            <label>Habilitar exibição de installments</label>
+                            <label>Habilitar exibição de parcelamento</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <comment>Serão mostrados os installmentss no frontend.</comment>
+                            <comment>Serão mostrados os parcelamentos no frontend.</comment>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -56,7 +73,7 @@
                             <label>Atributo do Produto com percentual de desconto no preço à vista</label>
                             <comment>Percentual de desconto definido no produto para calcular o preço à vista.</comment>
                             <frontend_type>select</frontend_type>
-                            <source_model>Contardi_Installments_Model_Source_Attributes</source_model>
+                            <source_model>installments/source_attributes</source_model>
                             <sort_order>25</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -76,7 +93,7 @@
                         </desconto_primeira_parcela>
 
                         <juros>
-                            <label>Juros aplicado ao installments</label>
+                            <label>Juros aplicado ao parcelamento</label>
                             <comment>Em porcentagem (ex: 1,99%). Juros compostos e ao mês.</comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>40</sort_order>
@@ -101,18 +118,18 @@
                             <label>Número de parcelas</label>
                             <comment>Número de parcelas para mostrar abaixo do preço de cada produto.</comment>
                             <frontend_type>select</frontend_type>
-                            <source_model>Contardi_Installments_Model_Source_Parcelas</source_model>
+                            <source_model>installments/source_installments</source_model>
                             <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </numparcelas>
-                        
+
                         <numparcelas_sem_juros>
                             <label>Número de parcelas sem juros</label>
-                            <comment>Número de parcelas sem juros para mostrar no installments dentro de cada produto.</comment>
+                            <comment>Número de parcelas sem juros para mostrar no parcelamento dentro de cada produto.</comment>
                             <frontend_type>select</frontend_type>
-                            <source_model>Contardi_Installments_Model_Source_Parcelas</source_model>
+                            <source_model>installments/source_installments</source_model>
                             <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -129,12 +146,12 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </show_numparcelas_sem_juros>
-                        
+
                         <tipo_juros>
                             <label>Tipo de Cálculo de Juros</label>
-                            <comment>Tipo de Cálculo de Juros que será aplicado para gerar o installments.</comment>
+                            <comment>Tipo de Cálculo de Juros que será aplicado para gerar o parcelamento.</comment>
                             <frontend_type>select</frontend_type>
-                            <source_model>Contardi_Installments_Model_Source_Juros</source_model>
+                            <source_model>installments/source_interest</source_model>
                             <sort_order>80</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

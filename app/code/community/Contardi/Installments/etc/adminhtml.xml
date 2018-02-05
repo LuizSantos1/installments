@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+  ~ INFORMAÇÕES SOBRE LICENÇA
+  ~
+  ~ Open Software License (OSL 3.0).
+  ~ http://opensource.org/licenses/osl-3.0.php
+  ~
+  ~ DISCLAIMER
+  ~
+  ~ Não edite este arquivo caso você pretenda atualizar este módulo futuramente
+  ~ para novas versões.
+  ~
+  ~ @category      Contardi
+  ~ @package       Contardi_Installments
+  ~ @license       http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  ~ @author        Thiago Contardi
+  -->
+
+<config>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <installments module="installments">
+                                        <title>Configurações de Parcelamento</title>
+                                        <sort_order>70</sort_order>
+                                    </installments>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
