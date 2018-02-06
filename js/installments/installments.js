@@ -345,8 +345,13 @@
                 var precoVista = self.getPrecoVista(price);
 
                 if(precoVista){
-                    priceBlock += '<span class="label"><span>'+self.options.textDescontoVista+'</span></span> ';
-                    priceBlock += '<span class="price"><span>'+formatCurrency(precoVista,self.options.template)+'</span></span> ';
+                    var textDescVista = self.options.textDescontoVista;
+                    if (textDescVista.indexOf('%') > -1) {
+		        textDescVista = textDescVista.replace(/\%s/g, parseFloat(this.options.descontoVista) + '%');
+                    }
+
+                    priceBlock += '<span class="label"><span>' + textDescVista + '</span></span> ';
+                    priceBlock += '<span class="price"><span>' + formatCurrency(precoVista,self.options.template) + '</span></span> ';
                 }
 
                 $j(selector).html(priceBlock);
