@@ -4,7 +4,7 @@ Módulo de parcelamento para exibição no catálogo, esse módulo não influenc
 
 Esse módulo utiliza a biblioteca jquery1.12.0 que já vem no magento 1.9.3.x
 Caso você utilize outra versão, será preciso comentar ou alterar a chamada do jQuery dentro deo arquivo de layout
-[https://github.com/contardi/installments/blob/master/app/design/base/default/layout/contardi/installments.xml#L5]
+[https://github.com/contardi/installments/blob/master/app/design/frontend/base/default/layout/contardi/installments.xml#L5]
  
 ## Instalação
 
